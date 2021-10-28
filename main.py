@@ -9,15 +9,15 @@ def keep_me_posted():
         page_num += 1
         url = f"https://www.keepmeposted.com.mt/jobs-in-malta/?pg={page_num}&per_page=21&order_by=date&order=DESC&keyword=&view_type=list"
         html = requests.get(url)
-        if html.status_code == 404:
+        if html.status_code == 404 or html.status_code == 403:
             break
         else:
             html_text = html.text
             soup = BeautifulSoup(html_text, "lxml")
             jobs = soup.find_all("div", class_="job-list-item")
             for job in jobs:
-                company_name = job.find("h6", "job-subtitle m-0").a.text.lstrip().rstrip()
-                position_description = job.find("h4", "job-title mt-0 mb-2").a.text.lstrip().rstrip()
+                company_name = job.find("h6", class_="job-subtitle m-0").a.text.lstrip().rstrip()
+                position_description = job.find("h4", class_="job-title mt-0 mb-2").a.text.lstrip().rstrip()
                 print("{:<50} {:<50} {:<20}".format(company_name, position_description, page_num))
 
 
@@ -33,11 +33,15 @@ def career_jet():
         else:
             html_text = html.text
             soup = BeautifulSoup(html_text, "lxml")
-            jobs = soup.find_all("div", class_="job-list-item")
+            jobs = soup.find_all("article", class_="job clicky")
             for job in jobs:
-                company_name = job.find("h6", "job-subtitle m-0").a.text.lstrip().rstrip()
-                position_description = job.find("h4", "job-title mt-0 mb-2").a.text.lstrip().rstrip()
-                print("{:<50} {:<50} {:<20}".format(company_name, position_description, page_num))
+                company_name = job.find("p", class_="company")
+                if company_name is None:
+                    pass
+                else:
+                    company_name = company_name.text.lstrip().rstrip()
+                    position_description = job.find("header").h2.a.text.lstrip().rstrip()
+                    print("{:<50} {:<50} {:<20}".format(company_name, position_description, page_num))
 
 
 if __name__ == "__main__":
