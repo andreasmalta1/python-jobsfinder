@@ -9,7 +9,7 @@ def keep_me_posted():
         page_num += 1
         url = f"https://www.keepmeposted.com.mt/jobs-in-malta/?pg={page_num}&per_page=21&order_by=date&order=DESC&keyword=&view_type=list"
         html = requests.get(url)
-        if html.status_code == 404 or html.status_code == 403:
+        if html.status_code == 404:
             break
         else:
             html_text = html.text
@@ -28,7 +28,7 @@ def career_jet():
         page_num += 1
         url = f"https://www.careerjet.com.mt/jobs-in-malta-island-120790.html?radius=0&p={page_num}&sort=date"
         html = requests.get(url)
-        if html.status_code == 404:
+        if html.status_code == 404 or html.status_code == 403:
             break
         else:
             html_text = html.text
