@@ -4,7 +4,6 @@ import requests
 
 def keep_me_posted():
     page_num = 0
-    print("{:<50} {:<50} {:<20}".format('Company Name', 'Position', "Page"))
     while True:
         page_num += 1
         url = f"https://www.keepmeposted.com.mt/jobs-in-malta/?pg={page_num}&per_page=21&order_by=date&order=DESC&keyword=&view_type=list"
@@ -17,13 +16,19 @@ def keep_me_posted():
             jobs = soup.find_all("div", class_="job-list-item")
             for job in jobs:
                 company_name = job.find("h6", class_="job-subtitle m-0").a.text.lstrip().rstrip()
-                position_description = job.find("h4", class_="job-title mt-0 mb-2").a.text.lstrip().rstrip()
-                print("{:<50} {:<50} {:<20}".format(company_name, position_description, page_num))
+                position = job.find("h4", class_="job-title mt-0 mb-2").a
+                position_description = position.text.lstrip().rstrip()
+                more_info = position["href"]
+                print(f"Company Name: {company_name}")
+                print(f"Position: {position_description}")
+                print(f"Link: {more_info}")
+                print(f"Page Number: {page_num}")
+                print()
 
 
 def career_jet():
     page_num = 0
-    print("{:<50} {:<50} {:<20}".format('Company Name', 'Position', "Page"))
+    career_url = "https://www.careerjet.com.mt"
     while True:
         page_num += 1
         url = f"https://www.careerjet.com.mt/jobs-in-malta-island-120790.html?radius=0&p={page_num}&sort=date"
@@ -40,8 +45,14 @@ def career_jet():
                     pass
                 else:
                     company_name = company_name.text.lstrip().rstrip()
-                    position_description = job.find("header").h2.a.text.lstrip().rstrip()
-                    print("{:<50} {:<50} {:<20}".format(company_name, position_description, page_num))
+                    position = job.find("header").h2.a
+                    position_description = position.text.lstrip().rstrip()
+                    more_info = position["href"]
+                    print(f"Company Name: {company_name}")
+                    print(f"Position: {position_description}")
+                    print(f"Link: {career_url}{more_info}")
+                    print(f"Page Number: {page_num}")
+                    print()
 
 
 if __name__ == "__main__":
