@@ -1,4 +1,4 @@
-# This programs scrapes the KeepMePosted.com and CareerJet.com websites to get a a list of psted of jobs and saves them
+# This program scrapes the KeepMePosted.com and CareerJet.com websites to get a a list of psted of jobs and saves them
 # in a text file
 
 from bs4 import BeautifulSoup
@@ -177,7 +177,7 @@ def career_jet():
     prepend_job(site)
 
 
-# Programs runs every hourl intervals and displays how many new jobs it has found for each website
+# Program runs at hourly intervals and displays how many new jobs it has found for each web
 if __name__ == "__main__":
     print("Getting jobs from KeepMePosted and CareerJet at hourly intervals")
     while True:
